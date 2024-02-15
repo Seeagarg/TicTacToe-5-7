@@ -1,0 +1,153 @@
+/* font-family: 'Montserrat', sans-serif;
+font-family: 'Raleway', sans-serif; */
+@import url('https://fonts.googleapis.com/css2?family=Protest+Revolution&family=Protest+Riot&display=swap');
+
+.container{
+    background: linear-gradient(to right,rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url("../staticImages/bg_1.jpg");
+     background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 100dvh;
+    position: relative;
+    overflow: hidden;
+}
+
+.game_title{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 14rem;
+}
+.title{
+    text-transform: uppercase;
+font-family: 'Protest Riot', sans-serif;
+    color:rgb(229, 128, 51);
+    -webkit-text-stroke-width: 0.5px;
+    -webkit-text-stroke-color: black;
+    letter-spacing: 0.2rem;
+    font-size: 7rem;
+    font-weight: 900;
+}
+
+.x_img_container{
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    transform: translate(-10%,-10%);
+}
+.x_img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.circle_img_container{
+    position: absolute;
+    top: -10%;
+    right: -10%;
+    transform: translate(-10%,-10%);
+}
+.circle_img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.game_mode_container{
+    width: 35rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4rem 1rem 4rem 1rem;
+    border-radius: 20px;
+    gap: 2rem;
+    background: linear-gradient(to right,rgba(0,0,0,0.4),rgba(0,0,0,0.4)),url("../staticImages/bg_2.jpg");
+  /* background-blend-mode: overlay;  */
+  background-size: cover;
+  opacity: 0.9;
+  z-index: 0;
+  box-shadow: 0 1.5rem 1.3rem rgba(0, 0, 0, 0.511);
+}
+
+.multiplayer_btn{
+    background-color: #cd7703;
+    outline: none;
+    border: none;
+    padding: 1rem 2rem 1rem 2rem;
+    width: 14rem;
+    font-size: 2rem;
+    /* font-family: 'Montserrat',sans-serif; */
+    font-family: 'Protest Revolution', sans-serif;
+    font-family: 'Protest Riot', sans-serif;
+    color: #fff;
+    border-radius: 0.5rem;
+    box-shadow: 0 1rem 1.5rem rgba(0,0,0,0.4);
+    cursor: pointer;
+    transition: all 0.3s;
+    z-index: 900;
+   
+}
+.computer_btn{
+    background-color: #202F3F;
+    outline: none;
+    border: none;
+    padding: 1rem 2rem 1rem 2rem;
+    width: 14rem;
+    font-size: 2rem;
+    /* font-family: 'Montserrat',sans-serif; */
+    font-family: 'Protest Revolution', sans-serif;
+    font-family: 'Protest Riot', sans-serif;
+    color: #fff;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    box-shadow: 0 1rem 1.5rem rgba(0,0,0,0.4);
+    transition: all 0.3s;
+    z-index: 900;
+}
+
+.multiplayer_btn:hover{
+    background-color:#db9200;
+}
+.computer_btn:hover{
+    background-color: #10161c;
+}
+
+.multiplayer_btn:active{
+    transform: scale(1.1);
+}
+.computer_btn:active{
+    transform: scale(1.1);
+}
+
+@media screen and (max-width:800px){
+    .circle_img_container{
+        height: 25rem;
+    }
+    .x_img_container{
+        height: 25rem;
+    }
+}
+
+@media screen and (max-width:600px){
+    .circle_img_container{
+        position: absolute;
+        top: -5%;
+        right: -10%;
+        transform: translate(-5%,-10%);
+        height: 15rem;
+    }
+    .x_img_container{
+        position: absolute;
+        top: -5%;
+        left: -10%;
+        transform: translate(-5%,-10%);
+        height: 15rem;
+        height: 15rem;
+    }
+}

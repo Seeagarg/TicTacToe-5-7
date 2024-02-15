@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Protest+Revolution&family=Protest+Riot&display=swap');
+
+
+*,*::before,*::after{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+html{
+    font-size: 62.5%;
+}
+
+body{
+    /* background-image: url("https://t3.ftcdn.net/jpg/06/40/40/02/360_F_640400265_GJtISejhrT0GbYXpuiwQzGJ40UWaY3II.jpg"); */
+    /* background-repeat: no-repeat; */
+    /* background-size: cover; */
+    /* background-attachment: fixed; */
+    min-height: 100dvh;
+    width: 100%;
+    font-family: 'Protest Revolution', sans-serif;
+font-family: 'Protest Riot', sans-serif;
+}

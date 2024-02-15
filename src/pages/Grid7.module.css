@@ -1,0 +1,205 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Protest+Revolution&display=swap');
+
+.container{
+    background: linear-gradient(to right,rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url("../staticImages/bg_1.jpg");
+    background-repeat: no-repeat;
+   background-size: cover;
+   background-attachment: fixed;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    min-height: 100dvh;
+    position: relative;
+    overflow: hidden;
+}
+
+.game_title{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* margin-top: 14rem; */
+}
+
+.title{
+    text-transform: uppercase;
+font-family: 'Protest Riot', sans-serif;
+    color:rgb(229, 128, 51);
+    -webkit-text-stroke-width: 0.5px;
+    -webkit-text-stroke-color: black;
+    letter-spacing: 0.2rem;
+    font-size: 7rem;
+    font-weight: 900;
+}
+
+.sub_container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+    align-items: center;
+    /* margin-top: 3rem; */
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%,-20%);
+}
+
+.player_turn_indicator{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.player_turn_indicator h1{
+    font-size: 3.5rem;
+    color: rgb(245, 241, 33);
+    -webkit-text-stroke-width: 0.1rem;
+    -webkit-text-stroke-color: black;
+    font-family: 'Montserrat',sans-serif;
+    font-family: 'Protest Riot', sans-serif;
+}
+
+.grid_container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.bg_img{
+    position: absolute;
+    width: 36rem;
+    height: 36rem;
+    /* object-fit:scale-down; */
+    object-fit:fill;
+}
+
+.grid{
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    width: 30rem;
+    justify-content: center; 
+    align-items: center; 
+    z-index: 99;
+    border-radius: 2rem;
+    padding: 2rem;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.tile_one, .tile_two, .tile_three, .tile_four, .tile_five, .tile_six, .tile_seven, .tile_eight, .tile_nine, .tile_ten, .tile_eleven, .tile_twelve, .tile_thirteen, .tile_fourteen, .tile_fifteen, .tile_sixteen, .tile_seventeen, .tile_eighteen, .tile_nineteen, .tile_twenty, .tile_twenty_one, .tile_twenty_two, .tile_twenty_three, .tile_twenty_four, .tile_twenty_five, .tile_twenty_six, .tile_twenty_seven, .tile_twenty_eight, .tile_twenty_nine, .tile_thirty,.tile_thirty_one,.tile_thirty_two,.tile_thirty_three,.tile_thirty_four,.tile_thirty_five,.tile_thirty_six,.tile_thirty_seven,.tile_thirty_eight,.tile_thirty_nine,.tile_forty,.tile_forty_one,.tile_forty_two,.tile_forty_three,.tile_forty_four,.tile_forty_five,.tile_forty_six,.tile_forty_seven,.tile_forty_eight,.tile_forty_nine {
+    border: 1.5px solid grey;
+    /* width: 6rem; */
+    width: 4rem;
+    height: 4rem;
+    border-radius: 0.2rem;
+    cursor: pointer;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Protest Revolution', sans-serif;
+    font-size: 4rem;
+    font-weight: 100;
+}
+
+.x_img_container{
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    transform: translate(-10%,-10%);
+}
+
+.x_img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.circle_img_container{
+    position: absolute;
+    top: -10%;
+    right: -10%;
+    transform: translate(-10%,-10%);
+}
+
+.circle_img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.tile_one,.tile_eight,.tile_fifteen,.tile_twenty_two,.tile_twenty_nine,.tile_thirty_six,.tile_forty_three{
+    border-left: 0;
+    border-top: 0;
+}
+
+.tile_two,.tile_nine,.tile_sixteen,.tile_twenty_three,.tile_thirty,.tile_thirty_seven,.tile_forty_four{
+    border-left: 0;
+    border-top: 0;
+}
+
+.tile_three,.tile_ten,.tile_seventeen,.tile_twenty_four,.tile_thirty_one,.tile_thirty_eight,.tile_forty_five{
+    border-left: 0;
+    border-top: 0;
+}
+
+.tile_four,.tile_eleven,.tile_eighteen,.tile_twenty_five,.tile_thirty_two,.tile_thirty_nine,.tile_forty_six{
+    border-left: 0;
+    border-top: 0;
+}
+
+.tile_five,.tile_twelve,.tile_nineteen,.tile_twenty_six,.tile_thirty_three,.tile_forty,.tile_forty_seven{
+    border-left: 0;
+    border-top: 0;
+    border-right: 0;
+}
+
+.tile_six,.tile_thirteen,.tile_twenty,.tile_twenty_seven,.tile_thirty_four,.tile_forty_one,.tile_forty_eight{
+    /* border-bottom: 0; */
+    border-top: 0;
+    border-right: 0;
+}
+
+.tile_seven,.tile_fourteen,.tile_twenty_one,.tile_twenty_eight,.tile_thirty_five,.tile_forty_two,.tile_forty_nine{
+    /* border-bottom: 0 !important; */
+    border-top: 0;
+    border-right: 0;
+}
+
+.tile_forty_three,.tile_forty_four,.tile_forty_five,.tile_forty_six,.tile_forty_seven,.tile_forty_eight,.tile_forty_nine{
+    border-bottom: 0;
+}
+
+@media screen and (max-width:800px){
+    .circle_img_container{
+        height: 25rem;
+    }
+    .x_img_container{
+        height: 25rem;
+    }
+}
+
+@media screen and (max-width:600px){
+    .circle_img_container{
+        position: absolute;
+        top: -5%;
+        right: -10%;
+        transform: translate(-5%,-10%);
+        height: 15rem;
+    }
+    .x_img_container{
+        position: absolute;
+        top: -5%;
+        left: -10%;
+        transform: translate(-5%,-10%);
+        height: 15rem;
+        height: 15rem;
+    }
+}

@@ -1,0 +1,133 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Protest+Revolution&family=Protest+Riot&display=swap');
+
+
+.container{
+    z-index: 99;
+    background-color: rgba(0,0,0,0.7);
+    width: 100%;
+    min-height: 100dvh;
+    position: relative;
+    animation: fade 0.8s ease-in-out forwards;
+}
+
+.sub_container{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 35rem;
+    height: 35rem;
+    
+    box-shadow: 0 1rem 1.5rem rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 2rem 3rem 2rem 3rem;
+    border-radius:2rem;
+    background: url('https://upload.wikimedia.org/wikipedia/commons/2/2e/Wood_background.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.modal_img_container{
+    width: 25rem;
+    height: 14rem;
+}
+.modal_img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.modal_description{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: black;
+    font-family: 'Protest Revolution', sans-serif;
+    font-family: 'Protest Riot', sans-serif;
+    letter-spacing: 1.5px;
+    font-size: xx-large;
+    gap: 2rem;
+}
+.modal_description h1{
+    text-align: center;
+    width: 100%;
+    font-size: 2.5rem;
+    color: #333;
+    
+}
+.modal_description p{
+    width: 100%;
+    text-align: center;
+    font-size: 2rem;
+    
+}
+
+.buttons_container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+}
+.play_btn{
+    padding: 1rem 1rem 1rem 1rem;
+    background-color: #E69A00;
+    color: white;
+    font-size: 2rem;
+    /* font-family: 'Monstserrat',sans-serif; */
+    border: none;
+    outline: none;
+    border-radius: 1rem;
+    box-shadow: 0 1rem 1.5rem rgba(0,0,0,0.6);
+    cursor: pointer;
+    font-family: 'Protest Revolution', sans-serif;
+    font-family: 'Protest Riot', sans-serif;
+
+}
+.back_btn{
+    padding: 1rem 1rem 1rem 1rem;
+    background-color: #202F3F;
+    color: white;
+    font-size: 2rem;
+    /* font-family: 'Monstserrat',sans-serif; */
+    font-family: 'Protest Revolution', sans-serif;
+    font-family: 'Protest Riot', sans-serif;
+    border: none;
+    outline: none;
+    border-radius: 1rem;
+    box-shadow: 0 1rem 1.5rem rgba(0,0,0,0.6);
+    cursor: pointer;
+}
+
+.play_btn:hover{
+    background-color:#db9200;
+}
+.back_btn:hover{
+    background-color: #10161c;
+}
+
+.play_btn:active{
+    transform: scale(1.1);
+}
+.back_btn:active{
+    transform: scale(1.1);
+}
+
+@keyframes fade{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
