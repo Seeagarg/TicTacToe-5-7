@@ -71,7 +71,7 @@ font-family: 'Protest Riot', sans-serif;
     top: 20%;
     left: 50%;
     transform: translate(-50%,-20%);
-    backdrop-filter: blur(5px);
+    /* backdrop-filter: blur(5px); */
 }
 
 .player_turn_indicator{

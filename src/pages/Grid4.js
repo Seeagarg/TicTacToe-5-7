@@ -37,7 +37,7 @@ const winningCombinations = [
 ];
 
 const calculateWinner = (board) => {
-  console.log("Calculate winner");
+  // console.log("Calculate winner");
   for (let combination of winningCombinations) {
     const [a, b, c, d] = combination;
     if (
@@ -49,7 +49,7 @@ const calculateWinner = (board) => {
       board[a] == board[c] &&
       board[a] == board[d]
     ) {
-      console.log(board[b], "winner");
+      // console.log(board[b], "winner");
       return board[b];
     }
   }
@@ -63,7 +63,7 @@ function doesObjectExistAtIndexWithValue(array, indexToCheck, valueToCheck) {
 }
 
 const getSmartComputerMove = (board) => {
-  console.log("if exist");
+  // console.log("if exist");
 
   if (
     doesObjectExistAtIndexWithValue(board, 2, "X") &&
@@ -246,17 +246,17 @@ const getSmartComputerMove = (board) => {
 
   function randomIndex() {
     const randomNumber = Math.floor(Math.random() * 25);
-    console.log(randomNumber, "random");
+    // console.log(randomNumber, "random");
     const check = board.every((item) => item !== "");
-    console.log(check);
+    // console.log(check);
     if (board[randomNumber] == "") {
       console.log("execute here!", randomNumber);
       return randomNumber;
     } else if (check) {
-      console.log("exit", "-----draw");
+      // console.log("exit", "-----draw");
       return;
     } else {
-      console.log("recall");
+      // console.log("recall");
       return randomIndex();
     }
   }
@@ -298,7 +298,7 @@ const Grid4 = () => {
 
   const closeModalHandler = () => {
     setWinType("");
-    localStorage.removeItem("WINNER")
+    // localStorage.removeItem("WINNER")
     dispatch(closeModal());
   };
 
@@ -417,7 +417,8 @@ const Grid4 = () => {
               `}
                 onClick={() => handleCellClick(index)}
               >
-                {cell}
+              <div>{cell}</div>
+                
               </div>
             ))}
             {isHumanTurn ? null : computerMove()}

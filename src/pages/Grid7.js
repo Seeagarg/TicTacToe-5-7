@@ -486,7 +486,7 @@ const getSmartComputerMove = (board) => {
   }
 
   function randomIndex() {
-    const randomNumber = Math.floor(Math.random() * 25);
+    const randomNumber = Math.floor(Math.random() * 49);
     console.log(randomNumber, "random");
     const check = board.every((item) => item !== "");
     console.log(check);
@@ -570,7 +570,7 @@ const Grid7 = () => {
       setWinType("0");
       dispatch(openModal());
     }
-  });
+  },[board]);
 
   return (
     <div className={classes.container}>

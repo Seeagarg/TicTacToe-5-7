@@ -23,7 +23,7 @@ font-family: 'Raleway', sans-serif; */
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 14rem;
+    margin-top: 10rem;
 }
 .title{
     text-transform: uppercase;
