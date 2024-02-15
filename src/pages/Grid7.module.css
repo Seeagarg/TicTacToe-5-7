@@ -70,7 +70,7 @@ font-family: 'Protest Riot', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 2rem;
+    margin-top: 1rem;
 }
 
 .bg_img{
@@ -175,6 +175,16 @@ font-family: 'Protest Riot', sans-serif;
 
 .tile_forty_three,.tile_forty_four,.tile_forty_five,.tile_forty_six,.tile_forty_seven,.tile_forty_eight,.tile_forty_nine{
     border-bottom: 0;
+}
+.desc{
+    /* margin-top: rem; */
+    font-size: 3rem;
+    color: rgb(245, 241, 33);
+    -webkit-text-stroke-width: 0.1rem;
+    -webkit-text-stroke-color: black;
+    font-family: 'Montserrat',sans-serif;
+    font-family: 'Protest Riot', sans-serif;
+    letter-spacing: 1px;
 }
 
 @media screen and (max-width:800px){

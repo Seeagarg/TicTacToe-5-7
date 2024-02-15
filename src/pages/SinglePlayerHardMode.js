@@ -4,8 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { toggleTurn } from "../slices/playerSlice";
 import GameOverModal from "../components/GameOverModal";
 import { closeModal, openModal } from "../slices/modalSlice";
-import { setTilesHardMode, setTilesHardModeComputer } from "../slices/tilesSliceHard";
+import {
+  setTilesHardMode,
+  setTilesHardModeComputer,
+} from "../slices/tilesSliceHard";
 import { setGameOver } from "../slices/gameOverSlice";
+import UserTurnAudio from "../components/UserTurnAudio";
+import ComputerTurnAudio from "../components/ComputerTurnAudio";
 
 const SinglePlayerHardMode = () => {
   const dispatch = useDispatch();
@@ -14,7 +19,8 @@ const SinglePlayerHardMode = () => {
   const [winner, setWinner] = useState("");
   const [winType, setWinType] = useState("");
   const { modal } = useSelector((state) => state.modalSlice);
-  const {gameOver}=useSelector(state=>state.gameOverSlice);
+  const { gameOver } = useSelector((state) => state.gameOverSlice);
+  const [audioPlay, setAudioPlay] = useState(false);
 
   const openModalHandler = () => {
     dispatch(openModal());
@@ -26,14 +32,14 @@ const SinglePlayerHardMode = () => {
   };
 
   const handleTileClick = (data) => {
-    const filled = tilesHardMode.some(item=>item.index==data.index)
+    setAudioPlay(true);
+    const filled = tilesHardMode.some((item) => item.index == data.index);
     if (player1 && !filled) {
       dispatch(setTilesHardMode({ index: data.index, value: "X" }));
       dispatch(toggleTurn());
     }
   };
 
-  
   function doesObjectExistAtIndexWithValue(array, indexToCheck, valueToCheck) {
     const foundObject = array.find((obj) => obj.index === indexToCheck);
 
@@ -44,241 +50,206 @@ const SinglePlayerHardMode = () => {
     if (
       doesObjectExistAtIndexWithValue(tilesHardMode, 1, "X") &&
       doesObjectExistAtIndexWithValue(tilesHardMode, 2, "X") &&
-      doesObjectExistAtIndexWithValue(tilesHardMode,3,"X")
+      doesObjectExistAtIndexWithValue(tilesHardMode, 3, "X")
     ) {
-        dispatch(setGameOver());
-    //   setTimeout(() => {
-        setWinner("Player X won the game!");
-   
-        openModalHandler();
-    //   }, 100);
+      dispatch(setGameOver());
+
+      setWinner("Player X won the game!");
+
+      openModalHandler();
     }
     if (
       doesObjectExistAtIndexWithValue(tilesHardMode, 1, "O") &&
       doesObjectExistAtIndexWithValue(tilesHardMode, 2, "O") &&
-      doesObjectExistAtIndexWithValue(tilesHardMode,3 , "O")
+      doesObjectExistAtIndexWithValue(tilesHardMode, 3, "O")
     ) {
-        dispatch(setGameOver());
+      dispatch(setGameOver());
 
-    //   setTimeout(() => {
-        setWinner("Player O won the game!");
-       
-        openModalHandler();
-    //   }, 100);
+      setWinner("Player O won the game!");
+
+      openModalHandler();
     }
     if (
       doesObjectExistAtIndexWithValue(tilesHardMode, 4, "X") &&
       doesObjectExistAtIndexWithValue(tilesHardMode, 5, "X") &&
-      doesObjectExistAtIndexWithValue(tilesHardMode, 6 ,"X")
+      doesObjectExistAtIndexWithValue(tilesHardMode, 6, "X")
     ) {
-        dispatch(setGameOver());
+      dispatch(setGameOver());
 
-        // setTimeout(() => {
-        setWinner("Player X won the game!");
-  
-        openModalHandler();
-    //   }, 100);
+      setWinner("Player X won the game!");
+
+      openModalHandler();
     }
     if (
       doesObjectExistAtIndexWithValue(tilesHardMode, 4, "O") &&
       doesObjectExistAtIndexWithValue(tilesHardMode, 5, "O") &&
-      doesObjectExistAtIndexWithValue(tilesHardMode, 6 ,"O")
+      doesObjectExistAtIndexWithValue(tilesHardMode, 6, "O")
     ) {
-        dispatch(setGameOver());
+      dispatch(setGameOver());
 
-        // setTimeout(() => {
-        setWinner("Player O won the game!");
-     
-        openModalHandler();
-    //   }, 100);
+      setWinner("Player O won the game!");
+
+      openModalHandler();
     }
     if (
       doesObjectExistAtIndexWithValue(tilesHardMode, 7, "X") &&
       doesObjectExistAtIndexWithValue(tilesHardMode, 8, "X") &&
-      doesObjectExistAtIndexWithValue(tilesHardMode, 9 ,"X")
+      doesObjectExistAtIndexWithValue(tilesHardMode, 9, "X")
     ) {
-        dispatch(setGameOver());
+      dispatch(setGameOver());
 
-        // setTimeout(() => {
-        setWinner("Player X won the game!");
-     
-        openModalHandler();
-    //   }, 100);
+      setWinner("Player X won the game!");
+
+      openModalHandler();
     }
     if (
       doesObjectExistAtIndexWithValue(tilesHardMode, 7, "O") &&
       doesObjectExistAtIndexWithValue(tilesHardMode, 8, "O") &&
-      doesObjectExistAtIndexWithValue(tilesHardMode, 9 ,"O")
+      doesObjectExistAtIndexWithValue(tilesHardMode, 9, "O")
     ) {
-        dispatch(setGameOver());
+      dispatch(setGameOver());
 
-        // setTimeout(() => {
-        setWinner("Player O won the game!");
-       
-        openModalHandler();
-    //   }, 100);
+      setWinner("Player O won the game!");
+
+      openModalHandler();
     }
     if (
       doesObjectExistAtIndexWithValue(tilesHardMode, 1, "X") &&
       doesObjectExistAtIndexWithValue(tilesHardMode, 4, "X") &&
-      doesObjectExistAtIndexWithValue(tilesHardMode, 7 ,"X")
+      doesObjectExistAtIndexWithValue(tilesHardMode, 7, "X")
     ) {
-        dispatch(setGameOver());
+      dispatch(setGameOver());
 
-        // setTimeout(() => {
-        setWinner("Player X won the game!");
-        openModalHandler();
-    //   }, 100);
+      setWinner("Player X won the game!");
+      openModalHandler();
     }
     if (
       doesObjectExistAtIndexWithValue(tilesHardMode, 1, "O") &&
       doesObjectExistAtIndexWithValue(tilesHardMode, 4, "O") &&
-      doesObjectExistAtIndexWithValue(tilesHardMode, 7 ,"O")
+      doesObjectExistAtIndexWithValue(tilesHardMode, 7, "O")
     ) {
-        dispatch(setGameOver());
+      dispatch(setGameOver());
 
-        // setTimeout(() => {
-        setWinner("Player O won the game!");
-      
-        openModalHandler();
-    //   }, 100);
+      setWinner("Player O won the game!");
+
+      openModalHandler();
     }
     if (
       doesObjectExistAtIndexWithValue(tilesHardMode, 2, "X") &&
       doesObjectExistAtIndexWithValue(tilesHardMode, 5, "X") &&
-      doesObjectExistAtIndexWithValue(tilesHardMode, 8 ,"X")
+      doesObjectExistAtIndexWithValue(tilesHardMode, 8, "X")
     ) {
-        dispatch(setGameOver());
+      dispatch(setGameOver());
 
-        // setTimeout(() => {
-        setWinner("Player X won the game!");
-        
-        openModalHandler();
-    //   }, 100);
+      setWinner("Player X won the game!");
+
+      openModalHandler();
     }
     if (
       doesObjectExistAtIndexWithValue(tilesHardMode, 2, "O") &&
       doesObjectExistAtIndexWithValue(tilesHardMode, 5, "O") &&
-      doesObjectExistAtIndexWithValue(tilesHardMode, 8 ,"O")
+      doesObjectExistAtIndexWithValue(tilesHardMode, 8, "O")
     ) {
-        dispatch(setGameOver());
+      dispatch(setGameOver());
 
-        // setTimeout(() => {
-        setWinner("Player O won the game!");
-        
-        openModalHandler();
-    //   }, 100);
+      setWinner("Player O won the game!");
+
+      openModalHandler();
     }
     if (
       doesObjectExistAtIndexWithValue(tilesHardMode, 3, "X") &&
       doesObjectExistAtIndexWithValue(tilesHardMode, 6, "X") &&
-      doesObjectExistAtIndexWithValue(tilesHardMode, 9 ,"X")
+      doesObjectExistAtIndexWithValue(tilesHardMode, 9, "X")
     ) {
-        dispatch(setGameOver());
+      dispatch(setGameOver());
 
-        // setTimeout(() => {
-        setWinner("Player X won the game!");
-        
-        openModalHandler();
-    //   }, 100);
+      setWinner("Player X won the game!");
+
+      openModalHandler();
     }
     if (
       doesObjectExistAtIndexWithValue(tilesHardMode, 3, "O") &&
       doesObjectExistAtIndexWithValue(tilesHardMode, 6, "O") &&
-      doesObjectExistAtIndexWithValue(tilesHardMode, 9 ,"O")
+      doesObjectExistAtIndexWithValue(tilesHardMode, 9, "O")
     ) {
-        dispatch(setGameOver());
+      dispatch(setGameOver());
 
-        // setTimeout(() => {
-        setWinner("Player O won the game!");
-       
-        openModalHandler();
-    //   }, 100);
+      setWinner("Player O won the game!");
+
+      openModalHandler();
     }
     if (
       doesObjectExistAtIndexWithValue(tilesHardMode, 1, "X") &&
       doesObjectExistAtIndexWithValue(tilesHardMode, 5, "X") &&
-      doesObjectExistAtIndexWithValue(tilesHardMode, 9 ,"X")
+      doesObjectExistAtIndexWithValue(tilesHardMode, 9, "X")
     ) {
-        dispatch(setGameOver());
+      dispatch(setGameOver());
 
-        // setTimeout(() => {
-        setWinner("Player X won the game!");
-        
-        openModalHandler();
-    //   }, 100);
+      setWinner("Player X won the game!");
+
+      openModalHandler();
     }
     if (
       doesObjectExistAtIndexWithValue(tilesHardMode, 1, "O") &&
       doesObjectExistAtIndexWithValue(tilesHardMode, 5, "O") &&
-      doesObjectExistAtIndexWithValue(tilesHardMode, 9 ,"O")
+      doesObjectExistAtIndexWithValue(tilesHardMode, 9, "O")
     ) {
-        dispatch(setGameOver());
+      dispatch(setGameOver());
 
-        // setTimeout(() => {
-        setWinner("Player O won the game!");
-        
-        openModalHandler();
-    //   }, 100);
+      setWinner("Player O won the game!");
+
+      openModalHandler();
     }
     if (
       doesObjectExistAtIndexWithValue(tilesHardMode, 3, "X") &&
       doesObjectExistAtIndexWithValue(tilesHardMode, 5, "X") &&
-      doesObjectExistAtIndexWithValue(tilesHardMode, 7 ,"X")
+      doesObjectExistAtIndexWithValue(tilesHardMode, 7, "X")
     ) {
-        dispatch(setGameOver());
+      dispatch(setGameOver());
 
-        // setTimeout(() => {
-        setWinner("Player X won the game!");
-        
-        openModalHandler();
-    //   }, 100);
+      setWinner("Player X won the game!");
+
+      openModalHandler();
     }
     if (
       doesObjectExistAtIndexWithValue(tilesHardMode, 3, "O") &&
       doesObjectExistAtIndexWithValue(tilesHardMode, 5, "O") &&
-      doesObjectExistAtIndexWithValue(tilesHardMode, 7 ,"O")
+      doesObjectExistAtIndexWithValue(tilesHardMode, 7, "O")
     ) {
-        dispatch(setGameOver());
+      dispatch(setGameOver());
 
-        // setTimeout(() => {
-        setWinner("Player O won the game!");
-        
-        openModalHandler();
-    //   }, 100);
+      setWinner("Player O won the game!");
+
+      openModalHandler();
     }
-    
   }, [tilesHardMode]);
 
+  useEffect(() => {
+    const over = localStorage.getItem("gameOver");
 
-  useEffect(()=>{
-    const over = localStorage.getItem("gameOver")
-    console.log(over,"overgame")
-    if (tilesHardMode?.length === 9 && !over ) {
-      
-
+    if (tilesHardMode?.length === 9 && !over) {
       setTimeout(() => {
         dispatch(setGameOver());
-        
-          setWinner("It's a Draw !");
-          setWinType("0");
-        
+
+        setWinner("It's a Draw !");
+        setWinType("0");
+
         openModalHandler();
-        
-    }, 1000);
-  }
-  },[tilesHardMode,gameOver])
+      }, 1000);
+    }
+  }, [tilesHardMode, gameOver]);
 
   useEffect(() => {
-    const over = localStorage.getItem("gameOver")
-    console.log(over,"overgame")
+    const over = localStorage.getItem("gameOver");
+
     if (computer && tilesHardMode?.length !== 9 && !over) {
       setTimeout(() => {
+        setAudioPlay(false);
         dispatch(setTilesHardModeComputer());
         dispatch(toggleTurn());
       }, 600);
     }
-  }, [computer,gameOver]);
+  }, [computer, gameOver]);
 
   const renderTiles = () => {
     const tilesArray = new Array(9).fill(null);
@@ -308,10 +279,10 @@ const SinglePlayerHardMode = () => {
         onClick={() => handleTileClick({ index: index + 1 })}
       >
         {Array.isArray(tilesHardMode)
-          ? tilesHardMode.map((tile,i) => {
+          ? tilesHardMode.map((tile, i) => {
               return (
                 <h1
-                key={i}
+                  key={i}
                   style={
                     tile?.value === "X"
                       ? { color: "#e8d615", fontSize: "7rem" }
@@ -332,6 +303,7 @@ const SinglePlayerHardMode = () => {
 
   return (
     <div className={classes.container}>
+      {audioPlay ? <UserTurnAudio /> : <ComputerTurnAudio />}
       <div className={classes.sub_container}>
         <div className={classes.game_title}>
           <h1 className={classes.title}>Tic-Tac-Toe</h1>

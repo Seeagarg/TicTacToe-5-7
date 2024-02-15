@@ -21,7 +21,7 @@ const GameMultiplayerPage = () => {
   const dispatch = useDispatch();
   const { player1, computer } = useSelector((state) => state.playerSlice);
   const { modal } = useSelector((state) => state.modalSlice);
-  const {gameOver} = useSelector((state)=>state.gameOverSlice)
+  const { gameOver } = useSelector((state) => state.gameOverSlice);
   const {
     oneTile,
     twoTile,
@@ -173,7 +173,7 @@ const GameMultiplayerPage = () => {
     nineTile,
   ]);
 
-  useEffect(()=>{
+  useEffect(() => {
     const over = localStorage.getItem("gameOver");
     if (
       oneTile != "" &&
@@ -184,7 +184,7 @@ const GameMultiplayerPage = () => {
       sixTile != "" &&
       sevenTile != "" &&
       eightTile != "" &&
-      nineTile != "" && 
+      nineTile != "" &&
       !over
     ) {
       setTimeout(() => {
@@ -193,7 +193,8 @@ const GameMultiplayerPage = () => {
         openModalHandler();
       }, 100);
     }
-  },[oneTile,
+  }, [
+    oneTile,
     twoTile,
     threeTile,
     fourTile,
@@ -202,8 +203,8 @@ const GameMultiplayerPage = () => {
     sevenTile,
     eightTile,
     nineTile,
-    gameOver
-  ])
+    gameOver,
+  ]);
 
   const tileClickHandler = (tile) => {
     if (tile.tile === "1") {
@@ -299,7 +300,7 @@ const GameMultiplayerPage = () => {
     }
     if (tile.tile === "8") {
       if (player1) {
-        if (eightTile == ""){
+        if (eightTile == "") {
           dispatch(eightTileHandler("X"));
           dispatch(toggleTurn());
         }

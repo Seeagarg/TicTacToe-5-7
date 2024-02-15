@@ -6,6 +6,8 @@ import GameOverModal from "../components/GameOverModal";
 import { closeModal, openModal } from "../slices/modalSlice";
 import { setTiles, setTilesComputer } from "../slices/tilesSliceDynamic";
 import { setGameOver } from "../slices/gameOverSlice";
+import UserTurnAudio from "../components/UserTurnAudio";
+import ComputerTurnAudio from "../components/ComputerTurnAudio";
 
 const SinglePlayerMediumMode = () => {
   const dispatch = useDispatch();
@@ -14,7 +16,8 @@ const SinglePlayerMediumMode = () => {
   const [winner, setWinner] = useState("");
   const [winType, setWinType] = useState("");
   const { modal } = useSelector((state) => state.modalSlice);
-  const {gameOver}=useSelector(state=>state.gameOverSlice);
+  const { gameOver } = useSelector((state) => state.gameOverSlice);
+  const [audioPlay, setAudioPlay] = useState(false);
 
   const openModalHandler = () => {
     dispatch(openModal());
@@ -26,14 +29,13 @@ const SinglePlayerMediumMode = () => {
   };
 
   const handleTileClick = (data) => {
-    const filled = tiles.some(item=>item.index==data.index)
+    setAudioPlay(true);
+    const filled = tiles.some((item) => item.index == data.index);
     if (player1 && !filled) {
       dispatch(setTiles({ index: data.index, value: "X" }));
       dispatch(toggleTurn());
     }
   };
-
-  
 
   function doesObjectExistAtIndexWithValue(array, indexToCheck, valueToCheck) {
     const foundObject = array.find((obj) => obj.index === indexToCheck);
@@ -45,207 +47,189 @@ const SinglePlayerMediumMode = () => {
     if (
       doesObjectExistAtIndexWithValue(tiles, 1, "X") &&
       doesObjectExistAtIndexWithValue(tiles, 2, "X") &&
-      doesObjectExistAtIndexWithValue(tiles,3,"X")
+      doesObjectExistAtIndexWithValue(tiles, 3, "X")
     ) {
       dispatch(setGameOver());
       // setTimeout(() => {
-        setWinner("Player X won the game!");
-        openModalHandler();
+      setWinner("Player X won the game!");
+      openModalHandler();
       // }, 100);
     }
     if (
       doesObjectExistAtIndexWithValue(tiles, 1, "O") &&
       doesObjectExistAtIndexWithValue(tiles, 2, "O") &&
-      doesObjectExistAtIndexWithValue(tiles,3 , "O")
+      doesObjectExistAtIndexWithValue(tiles, 3, "O")
     ) {
       dispatch(setGameOver());
-      // setTimeout(() => {
-        setWinner("Player O won the game!");
-        openModalHandler();
-      // }, 100);
+      setWinner("Player O won the game!");
+      openModalHandler();
     }
     if (
       doesObjectExistAtIndexWithValue(tiles, 4, "X") &&
       doesObjectExistAtIndexWithValue(tiles, 5, "X") &&
-      doesObjectExistAtIndexWithValue(tiles, 6 ,"X")
+      doesObjectExistAtIndexWithValue(tiles, 6, "X")
     ) {
       dispatch(setGameOver());
-      // setTimeout(() => {
-        setWinner("Player X won the game!");
-        openModalHandler();
-      // }, 100);
+
+      setWinner("Player X won the game!");
+      openModalHandler();
     }
     if (
       doesObjectExistAtIndexWithValue(tiles, 4, "O") &&
       doesObjectExistAtIndexWithValue(tiles, 5, "O") &&
-      doesObjectExistAtIndexWithValue(tiles, 6 ,"O")
+      doesObjectExistAtIndexWithValue(tiles, 6, "O")
     ) {
       dispatch(setGameOver());
-      // setTimeout(() => {
-        setWinner("Player O won the game!");
-        openModalHandler();
-      // }, 100);
+
+      setWinner("Player O won the game!");
+      openModalHandler();
     }
     if (
       doesObjectExistAtIndexWithValue(tiles, 7, "X") &&
       doesObjectExistAtIndexWithValue(tiles, 8, "X") &&
-      doesObjectExistAtIndexWithValue(tiles, 9 ,"X")
+      doesObjectExistAtIndexWithValue(tiles, 9, "X")
     ) {
       dispatch(setGameOver());
-      // setTimeout(() => {
-        setWinner("Player X won the game!");
-        openModalHandler();
-      // }, 100);
+
+      setWinner("Player X won the game!");
+      openModalHandler();
     }
     if (
       doesObjectExistAtIndexWithValue(tiles, 7, "O") &&
       doesObjectExistAtIndexWithValue(tiles, 8, "O") &&
-      doesObjectExistAtIndexWithValue(tiles, 9 ,"O")
+      doesObjectExistAtIndexWithValue(tiles, 9, "O")
     ) {
       dispatch(setGameOver());
-      // setTimeout(() => {
-        setWinner("Player O won the game!");
-        openModalHandler();
-      // }, 100);
+
+      setWinner("Player O won the game!");
+      openModalHandler();
     }
     if (
       doesObjectExistAtIndexWithValue(tiles, 1, "X") &&
       doesObjectExistAtIndexWithValue(tiles, 4, "X") &&
-      doesObjectExistAtIndexWithValue(tiles, 7 ,"X")
+      doesObjectExistAtIndexWithValue(tiles, 7, "X")
     ) {
       dispatch(setGameOver());
-      // setTimeout(() => {
-        setWinner("Player X won the game!");
-        openModalHandler();
-      // }, 100);
+
+      setWinner("Player X won the game!");
+      openModalHandler();
     }
     if (
       doesObjectExistAtIndexWithValue(tiles, 1, "O") &&
       doesObjectExistAtIndexWithValue(tiles, 4, "O") &&
-      doesObjectExistAtIndexWithValue(tiles, 7 ,"O")
+      doesObjectExistAtIndexWithValue(tiles, 7, "O")
     ) {
       dispatch(setGameOver());
-      // setTimeout(() => {
-        setWinner("Player O won the game!");
-        openModalHandler();
-      // }, 100);
+
+      setWinner("Player O won the game!");
+      openModalHandler();
     }
     if (
       doesObjectExistAtIndexWithValue(tiles, 2, "X") &&
       doesObjectExistAtIndexWithValue(tiles, 5, "X") &&
-      doesObjectExistAtIndexWithValue(tiles, 8 ,"X")
+      doesObjectExistAtIndexWithValue(tiles, 8, "X")
     ) {
       dispatch(setGameOver());
-      // setTimeout(() => {
-        setWinner("Player X won the game!");
-        openModalHandler();
-      // }, 100);
+
+      setWinner("Player X won the game!");
+      openModalHandler();
     }
     if (
       doesObjectExistAtIndexWithValue(tiles, 2, "O") &&
       doesObjectExistAtIndexWithValue(tiles, 5, "O") &&
-      doesObjectExistAtIndexWithValue(tiles, 8 ,"O")
+      doesObjectExistAtIndexWithValue(tiles, 8, "O")
     ) {
       dispatch(setGameOver());
-      // setTimeout(() => {
-        setWinner("Player O won the game!");
-        openModalHandler();
-      // }, 100);
+
+      setWinner("Player O won the game!");
+      openModalHandler();
     }
     if (
       doesObjectExistAtIndexWithValue(tiles, 3, "X") &&
       doesObjectExistAtIndexWithValue(tiles, 6, "X") &&
-      doesObjectExistAtIndexWithValue(tiles, 9 ,"X")
+      doesObjectExistAtIndexWithValue(tiles, 9, "X")
     ) {
       dispatch(setGameOver());
-      // setTimeout(() => {
-        setWinner("Player X won the game!");
-        openModalHandler();
-      // }, 100);
+
+      setWinner("Player X won the game!");
+      openModalHandler();
     }
     if (
       doesObjectExistAtIndexWithValue(tiles, 3, "O") &&
       doesObjectExistAtIndexWithValue(tiles, 6, "O") &&
-      doesObjectExistAtIndexWithValue(tiles, 9 ,"O")
+      doesObjectExistAtIndexWithValue(tiles, 9, "O")
     ) {
       dispatch(setGameOver());
-      // setTimeout(() => {
-        setWinner("Player O won the game!");
-        openModalHandler();
-      // }, 100);
+
+      setWinner("Player O won the game!");
+      openModalHandler();
     }
     if (
       doesObjectExistAtIndexWithValue(tiles, 1, "X") &&
       doesObjectExistAtIndexWithValue(tiles, 5, "X") &&
-      doesObjectExistAtIndexWithValue(tiles, 9 ,"X")
+      doesObjectExistAtIndexWithValue(tiles, 9, "X")
     ) {
       dispatch(setGameOver());
-      // setTimeout(() => {
-        setWinner("Player X won the game!");
-        openModalHandler();
-      // }, 100);
+
+      setWinner("Player X won the game!");
+      openModalHandler();
     }
     if (
       doesObjectExistAtIndexWithValue(tiles, 1, "O") &&
       doesObjectExistAtIndexWithValue(tiles, 5, "O") &&
-      doesObjectExistAtIndexWithValue(tiles, 9 ,"O")
+      doesObjectExistAtIndexWithValue(tiles, 9, "O")
     ) {
       dispatch(setGameOver());
-      // setTimeout(() => {
-        setWinner("Player O won the game!");
-        openModalHandler();
-      // }, 100);
+
+      setWinner("Player O won the game!");
+      openModalHandler();
     }
     if (
       doesObjectExistAtIndexWithValue(tiles, 3, "X") &&
       doesObjectExistAtIndexWithValue(tiles, 5, "X") &&
-      doesObjectExistAtIndexWithValue(tiles, 7 ,"X")
+      doesObjectExistAtIndexWithValue(tiles, 7, "X")
     ) {
       dispatch(setGameOver());
-      // setTimeout(() => {
-        setWinner("Player X won the game!");
-        openModalHandler();
-      // }, 100);
+
+      setWinner("Player X won the game!");
+      openModalHandler();
     }
     if (
       doesObjectExistAtIndexWithValue(tiles, 3, "O") &&
       doesObjectExistAtIndexWithValue(tiles, 5, "O") &&
-      doesObjectExistAtIndexWithValue(tiles, 7 ,"O")
+      doesObjectExistAtIndexWithValue(tiles, 7, "O")
     ) {
       dispatch(setGameOver());
-      // setTimeout(() => {
-        setWinner("Player O won the game!");
-        openModalHandler();
-      // }, 100);
+
+      setWinner("Player O won the game!");
+      openModalHandler();
     }
   }, [tiles]);
 
-  useEffect(()=>{
-    const over = localStorage.getItem("gameOver")
-    if (tiles?.length === 9 && !over ) {
+  useEffect(() => {
+    const over = localStorage.getItem("gameOver");
+    if (tiles?.length === 9 && !over) {
       setTimeout(() => {
         dispatch(setGameOver());
-        
-          setWinner("It's a Draw !");
-          setWinType("0");
-        
-        openModalHandler();
-        
-    }, 1000);
-  }
-  },[tiles,gameOver])
 
+        setWinner("It's a Draw !");
+        setWinType("0");
+
+        openModalHandler();
+      }, 1000);
+    }
+  }, [tiles, gameOver]);
 
   useEffect(() => {
-    const over = localStorage.getItem("gameOver")
+    const over = localStorage.getItem("gameOver");
     if (computer && tiles?.length !== 9 && !over) {
       setTimeout(() => {
+        setAudioPlay(false);
         dispatch(setTilesComputer());
         dispatch(toggleTurn());
       }, 1000);
     }
-  }, [computer,gameOver]);
-
+  }, [computer, gameOver]);
 
   const renderTiles = () => {
     const tilesArray = new Array(9).fill(null);
@@ -276,7 +260,6 @@ const SinglePlayerMediumMode = () => {
       >
         {Array.isArray(tiles)
           ? tiles.map((tile) => {
-              console.log(tile, "t");
               return (
                 <h1
                   style={
@@ -299,6 +282,7 @@ const SinglePlayerMediumMode = () => {
 
   return (
     <div className={classes.container}>
+      {audioPlay ? <UserTurnAudio /> : <ComputerTurnAudio />}
       <div className={classes.sub_container}>
         <div className={classes.game_title}>
           <h1 className={classes.title}>Tic-Tac-Toe</h1>

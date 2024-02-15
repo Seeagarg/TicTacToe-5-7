@@ -38,17 +38,18 @@ const HomePage = () => {
       </div>
 
       <div className={classes.game_mode_container}>
-        <button
-          className={classes.multiplayer_btn}
-          onClick={() => navigateHandler("/game-mode-multiplayer")}
-        >
-          2 Players
-        </button>
+       
         <button
           className={classes.computer_btn}
           onClick={() => navigateHandler("/single-player/levels")}
         >
           1 Player
+        </button>
+        <button
+          className={classes.multiplayer_btn}
+          onClick={() => navigateHandler("/game-mode-multiplayer")}
+        >
+          2 Players
         </button>
       </div>
     </div>

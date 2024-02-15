@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setBoard, setIsHumanTurn, setWinner } from "../slices/tiles5Slice";
 import { closeModal, openModal } from "../slices/modalSlice";
 import GameOverModal from "../components/GameOverModal";
+import UserTurnAudio from "../components/UserTurnAudio";
+import ComputerTurnAudio from "../components/ComputerTurnAudio";
 
 const winningCombinations = [
   [0, 1, 2, 3],
@@ -36,8 +38,8 @@ const winningCombinations = [
   [9, 13, 17, 21],
 ];
 
+//calculate the winner
 const calculateWinner = (board) => {
-  // console.log("Calculate winner");
   for (let combination of winningCombinations) {
     const [a, b, c, d] = combination;
     if (
@@ -49,7 +51,6 @@ const calculateWinner = (board) => {
       board[a] == board[c] &&
       board[a] == board[d]
     ) {
-      // console.log(board[b], "winner");
       return board[b];
     }
   }
@@ -57,14 +58,15 @@ const calculateWinner = (board) => {
   return null;
 };
 
+//to check if some value exist or not on a particular index
 function doesObjectExistAtIndexWithValue(array, indexToCheck, valueToCheck) {
   const foundObject = array[indexToCheck] !== "";
   return foundObject && array[indexToCheck] === valueToCheck;
 }
 
+//to run computer smartly
 const getSmartComputerMove = (board) => {
-  // console.log("if exist");
-
+  //first check the inner 2 tiles and block the third tile in all rows and cols and diagonals
   if (
     doesObjectExistAtIndexWithValue(board, 2, "X") &&
     doesObjectExistAtIndexWithValue(board, 3, "X") &&
@@ -79,7 +81,6 @@ const getSmartComputerMove = (board) => {
     !doesObjectExistAtIndexWithValue(board, 3, "O") &&
     !doesObjectExistAtIndexWithValue(board, 3, "X")
   ) {
-    console.log("ifexist");
     return 3;
   }
   if (
@@ -222,6 +223,7 @@ const getSmartComputerMove = (board) => {
     return 19;
   }
 
+  //computer checks by putting "O" and "X" on every index whether there is some winning condition or not
   for (let i = 0; i < 25; i++) {
     if (board[i] === "") {
       const newBoard = [...board];
@@ -240,23 +242,22 @@ const getSmartComputerMove = (board) => {
       if (calculateWinner(newBoard)) {
         return i;
       }
-      newBoard[i] = ""; 
+      newBoard[i] = "";
     }
   }
 
+  //this generates random index where computer will run its turn and put "O"
   function randomIndex() {
     const randomNumber = Math.floor(Math.random() * 25);
-    // console.log(randomNumber, "random");
+
     const check = board.every((item) => item !== "");
-    // console.log(check);
+
     if (board[randomNumber] == "") {
-      console.log("execute here!", randomNumber);
       return randomNumber;
     } else if (check) {
-      // console.log("exit", "-----draw");
       return;
     } else {
-      // console.log("recall");
+      //if generated random index has some value there than again call the function
       return randomIndex();
     }
   }
@@ -267,42 +268,47 @@ const getSmartComputerMove = (board) => {
 const Grid4 = () => {
   const dispatch = useDispatch();
   const [winType, setWinType] = useState("");
+  const [audioPlay, setAudioPlay] = useState(false);
   const { board, isHumanTurn, winner } = useSelector(
     (state) => state.tiles5Slice
   );
 
   const { modal } = useSelector((state) => state.modalSlice);
 
+  //this function is called when click on one tile with index passed as argument
+  //here we can change the array and set that array into the redux
   const handleCellClick = (index) => {
-    // console.log(calculateWinner(),"WINNER");
     if (board[index] === "" && isHumanTurn) {
       const newBoard = [...board];
       newBoard[index] = "X";
+      setAudioPlay(true);
       dispatch(setBoard(newBoard));
       dispatch(setIsHumanTurn(false));
     }
   };
 
+  //this is for computers move here computer will call getsmartcomputermove function to get some index where computer will put its value
   const computerMove = () => {
-    const checkWinner = calculateWinner(board)
+    const checkWinner = calculateWinner(board);
     if (!checkWinner) {
       const moveIndex = getSmartComputerMove(board);
       const newBoard = [...board];
       newBoard[moveIndex] = "O";
       setTimeout(() => {
+        setAudioPlay(false);
         dispatch(setBoard(newBoard));
         dispatch(setIsHumanTurn(true));
       }, 600);
     }
   };
 
+  //this closes the modal which opened when someone wins or game over
   const closeModalHandler = () => {
     setWinType("");
-    // localStorage.removeItem("WINNER")
     dispatch(closeModal());
   };
 
- 
+  //here winner is checked and set into the redux state
   useEffect(() => {
     const checkWinner = calculateWinner(board);
     if (checkWinner) {
@@ -312,18 +318,19 @@ const Grid4 = () => {
 
   if (winner) {
     dispatch(openModal());
-    
   }
 
-  useEffect(()=>{
-    if(board.every((item)=>item != "")){
+  //here every box is checked if filled then there is draw condition
+  useEffect(() => {
+    if (board.every((item) => item != "")) {
       setWinType("0");
       dispatch(openModal());
     }
-  })
+  });
 
   return (
     <div className={classes.container}>
+      {audioPlay ? <UserTurnAudio /> : <ComputerTurnAudio />}
       <div className={classes.sub_container}>
         <div className={classes.game_title}>
           <h1 className={classes.title}>Tic-Tac-Toe</h1>
@@ -411,19 +418,25 @@ const Grid4 = () => {
                     ? classes.tile_twenty_five
                     : index === 25
                     ? classes.tile_twenty_six
-                    
                     : null
                 }
               `}
+                style={
+                  cell === "X"
+                    ? { color: "#e8d615" }
+                    : {
+                        color: "white",
+                      }
+                }
                 onClick={() => handleCellClick(index)}
               >
-              <div>{cell}</div>
-                
+                <div>{cell}</div>
               </div>
             ))}
             {isHumanTurn ? null : computerMove()}
           </div>
         </div>
+        <div className={classes.desc}>place 4 in a row</div>
       </div>
       {modal && (
         <GameOverModal

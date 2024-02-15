@@ -76,7 +76,8 @@ font-family: 'Protest Riot', sans-serif;
 }
 
 .multiplayer_btn{
-    background-color: #cd7703;
+    /* background-color: #cd7703; */
+    background-color: #202F3F;
     outline: none;
     border: none;
     padding: 1rem 2rem 1rem 2rem;
@@ -94,7 +95,8 @@ font-family: 'Protest Riot', sans-serif;
    
 }
 .computer_btn{
-    background-color: #202F3F;
+    background-color: #cd7703;
+    /* background-color: #202F3F; */
     outline: none;
     border: none;
     padding: 1rem 2rem 1rem 2rem;
@@ -112,10 +114,12 @@ font-family: 'Protest Riot', sans-serif;
 }
 
 .multiplayer_btn:hover{
-    background-color:#db9200;
+    background-color: #10161c;
+    /* background-color:#db9200; */
 }
 .computer_btn:hover{
-    background-color: #10161c;
+    /* background-color: #10161c; */
+    background-color:#db9200;
 }
 
 .multiplayer_btn:active{

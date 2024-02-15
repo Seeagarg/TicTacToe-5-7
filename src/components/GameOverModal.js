@@ -1,7 +1,7 @@
 import React from "react";
 import classes from "./GameOverModal.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { resetPlayerState,  toggleTurn } from "../slices/playerSlice";
+import { resetPlayerState, toggleTurn } from "../slices/playerSlice";
 import { resetTilesState } from "../slices/tilesSlice";
 import { useNavigate } from "react-router-dom";
 import { resetTilesArray } from "../slices/tilesSliceDynamic";
@@ -11,9 +11,6 @@ import { resetTiles5Slice } from "../slices/tiles5Slice";
 import { resetTiles7Slice } from "../slices/grid7Slice";
 
 const GameOverModal = ({ winner, winType, closeModalHandler, path }) => {
-
-
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const navigateHandler = (path) => {
@@ -23,7 +20,7 @@ const GameOverModal = ({ winner, winType, closeModalHandler, path }) => {
     dispatch(resetTilesArray());
     dispatch(resetTilesHardMode());
     dispatch(resetGameOver());
-    dispatch(resetTiles7Slice())
+    dispatch(resetTiles7Slice());
     // dispatch(setTurn())
     navigate(path);
   };
@@ -34,8 +31,8 @@ const GameOverModal = ({ winner, winType, closeModalHandler, path }) => {
     dispatch(resetTilesArray());
     dispatch(resetTilesHardMode());
     dispatch(resetGameOver());
-    dispatch(resetTiles5Slice())
-    dispatch(resetTiles7Slice())
+    dispatch(resetTiles5Slice());
+    dispatch(resetTiles7Slice());
   };
   return (
     <div className={classes.container}>
@@ -57,7 +54,7 @@ const GameOverModal = ({ winner, winType, closeModalHandler, path }) => {
         </div>
         <div className={classes.modal_description}>
           <h1>{winType == "0" ? "Draw!" : "Congratulations!"}</h1>
-          <p>{ winType == "0" ? "No One wins" : winner}</p>
+          <p>{winType == "0" ? "No One wins" : winner}</p>
         </div>
         <div className={classes.buttons_container}>
           <button

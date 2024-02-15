@@ -17,12 +17,14 @@ import { toggleTurn } from "../slices/playerSlice";
 import GameOverModal from "../components/GameOverModal";
 import { closeModal, openModal } from "../slices/modalSlice";
 import gameOverSlice, { setGameOver } from "../slices/gameOverSlice";
-
+import UserTurnAudio from "../components/UserTurnAudio";
+import ComputerTurnAudio from "../components/ComputerTurnAudio";
 const SinglePlayerEasyMode = () => {
   const dispatch = useDispatch();
   const { player1, computer } = useSelector((state) => state.playerSlice);
   const { modal } = useSelector((state) => state.modalSlice);
-  const {gameOver} = useSelector((state)=>state.gameOverSlice)
+  const [audioPlay, setAudioPlay] = useState(false);
+  const { gameOver } = useSelector((state) => state.gameOverSlice);
   const {
     oneTile,
     twoTile,
@@ -35,18 +37,16 @@ const SinglePlayerEasyMode = () => {
     nineTile,
   } = useSelector((state) => state.tilesSlice);
   const [winner, setWinner] = useState("");
-  const [winType,setWinType]=useState("");
+  const [winType, setWinType] = useState("");
 
   const openModalHandler = () => {
     dispatch(openModal());
-};
+  };
 
-const closeModalHandler=()=>{
-  setWinType("");
-  dispatch(closeModal());
-}
-
-  
+  const closeModalHandler = () => {
+    setWinType("");
+    dispatch(closeModal());
+  };
 
   useEffect(() => {
     if (oneTile == "X" && twoTile == "X" && threeTile == "X") {
@@ -161,7 +161,6 @@ const closeModalHandler=()=>{
         openModalHandler();
       }, 100);
     }
-    
   }, [
     oneTile,
     twoTile,
@@ -174,18 +173,28 @@ const closeModalHandler=()=>{
     nineTile,
   ]);
 
-
-  useEffect(()=>{
-    const over = localStorage.getItem("gameOver")
-    if(oneTile!=""&&twoTile!=""&&threeTile!=""&&fourTile!=""&&fiveTile!=""&&sixTile!=""&&sevenTile!=""&&eightTile!=""&&nineTile!="" && !over){
-      setTimeout(()=>{
+  useEffect(() => {
+    const over = localStorage.getItem("gameOver");
+    if (
+      oneTile != "" &&
+      twoTile != "" &&
+      threeTile != "" &&
+      fourTile != "" &&
+      fiveTile != "" &&
+      sixTile != "" &&
+      sevenTile != "" &&
+      eightTile != "" &&
+      nineTile != "" &&
+      !over
+    ) {
+      setTimeout(() => {
         setWinner("It's a Draw !");
         setWinType("0");
         openModalHandler();
-      },100)
+      }, 100);
     }
-
-  },[oneTile,
+  }, [
+    oneTile,
     twoTile,
     threeTile,
     fourTile,
@@ -194,23 +203,23 @@ const closeModalHandler=()=>{
     sevenTile,
     eightTile,
     nineTile,
-    gameOver])
+    gameOver,
+  ]);
 
-    useEffect(() => {
-      const over = localStorage.getItem("gameOver")
-      if (computer && !over) {
-        setTimeout(() => {
-          dispatch(toggleTurn());
-          dispatch(randomTileHandler("O"));
-        }, 600);
-      }
-    }, [
-      computer,gameOver
-    ]);
-
-
+  useEffect(() => {
+    const over = localStorage.getItem("gameOver");
+    if (computer && !over) {
+      setTimeout(() => {
+        setAudioPlay(false);
+        dispatch(toggleTurn());
+        dispatch(randomTileHandler("O"));
+      }, 600);
+    }
+  }, [computer, gameOver]);
 
   const tileClickHandler = (tile) => {
+    setAudioPlay(true);
+
     if (tile.tile === "1") {
       if (player1) {
         if (oneTile == "") {
@@ -286,12 +295,12 @@ const closeModalHandler=()=>{
   };
   return (
     <div className={classes.container}>
-
+      {audioPlay ? <UserTurnAudio /> : <ComputerTurnAudio />}
       <div className={classes.sub_container}>
-      <div className={classes.game_title}>
-        <h1 className={classes.title}>Tic-Tac-Toe</h1>
-      </div>
-     
+        <div className={classes.game_title}>
+          <h1 className={classes.title}>Tic-Tac-Toe</h1>
+        </div>
+
         <div className={classes.player_turn_indicator}>
           <h1>
             {player1
@@ -303,22 +312,22 @@ const closeModalHandler=()=>{
         </div>
 
         <div className={classes.x_img_container}>
-        <img
-          src="/assets/images/bg_x.png"
-          alt="X mark"
-          className={classes.x_img}
-        />
-      </div>
-      <div className={classes.circle_img_container}>
-        <img
-          src="/assets/images/bg_circle.png"
-          alt="Circle mark"
-          className={classes.circle_img}
-        />
-      </div>
-        
+          <img
+            src="/assets/images/bg_x.png"
+            alt="X mark"
+            className={classes.x_img}
+          />
+        </div>
+        <div className={classes.circle_img_container}>
+          <img
+            src="/assets/images/bg_circle.png"
+            alt="Circle mark"
+            className={classes.circle_img}
+          />
+        </div>
+
         <div className={classes.grid_container}>
-        <img
+          <img
             src="/assets/images/background-grid.jpg"
             className={classes.bg_img}
           />
@@ -328,9 +337,9 @@ const closeModalHandler=()=>{
               onClick={() => tileClickHandler({ tile: "1" })}
             >
               {oneTile == "X" ? (
-                <div style={{color:"#e8d615",fontSize:"7rem"}}>X</div>
+                <div style={{ color: "#e8d615", fontSize: "7rem" }}>X</div>
               ) : oneTile == "O" ? (
-                <div style={{color:"white",fontSize:"7rem"}}>O</div>
+                <div style={{ color: "white", fontSize: "7rem" }}>O</div>
               ) : null}
             </div>
             <div
@@ -338,9 +347,9 @@ const closeModalHandler=()=>{
               onClick={() => tileClickHandler({ tile: "2" })}
             >
               {twoTile == "X" ? (
-                <div style={{color:"#e8d615",fontSize:"7rem"}}>X</div>
+                <div style={{ color: "#e8d615", fontSize: "7rem" }}>X</div>
               ) : twoTile == "O" ? (
-                <div style={{color:"white",fontSize:"7rem"}}>O</div>
+                <div style={{ color: "white", fontSize: "7rem" }}>O</div>
               ) : null}
             </div>
             <div
@@ -348,9 +357,9 @@ const closeModalHandler=()=>{
               onClick={() => tileClickHandler({ tile: "3" })}
             >
               {threeTile == "X" ? (
-                <div style={{color:"#e8d615",fontSize:"7rem"}}>X</div>
+                <div style={{ color: "#e8d615", fontSize: "7rem" }}>X</div>
               ) : threeTile == "O" ? (
-                <div style={{color:"white",fontSize:"7rem"}}>O</div>
+                <div style={{ color: "white", fontSize: "7rem" }}>O</div>
               ) : null}
             </div>
             <div
@@ -358,9 +367,9 @@ const closeModalHandler=()=>{
               onClick={() => tileClickHandler({ tile: "4" })}
             >
               {fourTile == "X" ? (
-                <div style={{color:"#e8d615",fontSize:"7rem"}}>X</div>
+                <div style={{ color: "#e8d615", fontSize: "7rem" }}>X</div>
               ) : fourTile == "O" ? (
-                <div style={{color:"white",fontSize:"7rem"}}>O</div>
+                <div style={{ color: "white", fontSize: "7rem" }}>O</div>
               ) : null}
             </div>
             <div
@@ -368,9 +377,9 @@ const closeModalHandler=()=>{
               onClick={() => tileClickHandler({ tile: "5" })}
             >
               {fiveTile == "X" ? (
-                <div style={{color:"#e8d615",fontSize:"7rem"}}>X</div>
+                <div style={{ color: "#e8d615", fontSize: "7rem" }}>X</div>
               ) : fiveTile == "O" ? (
-                <div style={{color:"white",fontSize:"7rem"}}>O</div>
+                <div style={{ color: "white", fontSize: "7rem" }}>O</div>
               ) : null}
             </div>
             <div
@@ -378,9 +387,9 @@ const closeModalHandler=()=>{
               onClick={() => tileClickHandler({ tile: "6" })}
             >
               {sixTile == "X" ? (
-                <div style={{color:"#e8d615",fontSize:"7rem"}}>X</div>
+                <div style={{ color: "#e8d615", fontSize: "7rem" }}>X</div>
               ) : sixTile == "O" ? (
-                <div style={{color:"white",fontSize:"7rem"}}>O</div>
+                <div style={{ color: "white", fontSize: "7rem" }}>O</div>
               ) : null}
             </div>
             <div
@@ -388,9 +397,9 @@ const closeModalHandler=()=>{
               onClick={() => tileClickHandler({ tile: "7" })}
             >
               {sevenTile == "X" ? (
-                <div style={{color:"#e8d615",fontSize:"7rem"}}>X</div>
+                <div style={{ color: "#e8d615", fontSize: "7rem" }}>X</div>
               ) : sevenTile == "O" ? (
-                <div style={{color:"white",fontSize:"7rem"}}>O</div>
+                <div style={{ color: "white", fontSize: "7rem" }}>O</div>
               ) : null}
             </div>
             <div
@@ -398,9 +407,9 @@ const closeModalHandler=()=>{
               onClick={() => tileClickHandler({ tile: "8" })}
             >
               {eightTile == "X" ? (
-                <div style={{color:"#e8d615",fontSize:"7rem"}}>X</div>
+                <div style={{ color: "#e8d615", fontSize: "7rem" }}>X</div>
               ) : eightTile == "O" ? (
-                <div style={{color:"white",fontSize:"7rem"}}>O</div>
+                <div style={{ color: "white", fontSize: "7rem" }}>O</div>
               ) : null}
             </div>
             <div
@@ -408,16 +417,21 @@ const closeModalHandler=()=>{
               onClick={() => tileClickHandler({ tile: "9" })}
             >
               {nineTile == "X" ? (
-                <div style={{color:"#e8d615",fontSize:"7rem"}}>X</div>
+                <div style={{ color: "#e8d615", fontSize: "7rem" }}>X</div>
               ) : nineTile == "O" ? (
-                <div style={{color:"white",fontSize:"7rem"}}>O</div>
+                <div style={{ color: "white", fontSize: "7rem" }}>O</div>
               ) : null}
             </div>
           </div>
         </div>
       </div>
       {modal && (
-        <GameOverModal winner={winner} winType={winType} closeModalHandler={closeModalHandler} path="/single-player/game-mode-easy" />
+        <GameOverModal
+          winner={winner}
+          winType={winType}
+          closeModalHandler={closeModalHandler}
+          path="/single-player/game-mode-easy"
+        />
       )}
     </div>
   );

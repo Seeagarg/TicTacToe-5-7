@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setBoard, setIsHumanTurn, setWinner } from "../slices/grid7Slice";
 import { closeModal, openModal } from "../slices/modalSlice";
 import GameOverModal from "../components/GameOverModal";
+import UserTurnAudio from "../components/UserTurnAudio";
+import ComputerTurnAudio from "../components/ComputerTurnAudio";
 
 const winningCombinations = [
   [0, 1, 2, 3, 4],
@@ -68,6 +70,7 @@ const winningCombinations = [
   [4, 10, 16, 22, 28],
 ];
 
+//calculate the winner
 const calculateWinner = (board) => {
   for (let combination of winningCombinations) {
     const [a, b, c, d, e] = combination;
@@ -82,7 +85,6 @@ const calculateWinner = (board) => {
       board[a] === board[d] &&
       board[a] === board[e]
     ) {
-      console.log(board[a], "winner");
       return board[b];
     }
   }
@@ -90,12 +92,15 @@ const calculateWinner = (board) => {
   return null;
 };
 
+//to check if some value exist or not on a particular index
 function doesObjectExistAtIndexWithValue(array, indexToCheck, valueToCheck) {
   const foundObject = array[indexToCheck] !== "";
   return foundObject && array[indexToCheck] === valueToCheck;
 }
 
+//to run computer smartly
 const getSmartComputerMove = (board) => {
+  //first check the inner 2 tiles and block the third tile in all rows and cols and diagonals
   if (
     doesObjectExistAtIndexWithValue(board, 2, "X") &&
     doesObjectExistAtIndexWithValue(board, 3, "X") &&
@@ -463,6 +468,7 @@ const getSmartComputerMove = (board) => {
     return 15;
   }
 
+  //computer checks by putting "O" and "X" on every index whether there is some winning condition or not
   for (let i = 0; i < 49; i++) {
     if (board[i] === "") {
       const newBoard = [...board];
@@ -485,17 +491,16 @@ const getSmartComputerMove = (board) => {
     }
   }
 
+  //this generates random index where computer will run its turn and put "O"
   function randomIndex() {
     const randomNumber = Math.floor(Math.random() * 49);
-    console.log(randomNumber, "random");
     const check = board.every((item) => item !== "");
-    console.log(check);
     if (board[randomNumber] == "") {
       return randomNumber;
     } else if (check) {
       return;
     } else {
-      console.log("recall");
+      //if generated random index has some value there than again call the function
       return randomIndex();
     }
   }
@@ -505,14 +510,17 @@ const getSmartComputerMove = (board) => {
 const Grid7 = () => {
   const dispatch = useDispatch();
   const [winType, setWinType] = useState("");
+  const [audioPlay, setAudioPlay] = useState(false);
   const { board, isHumanTurn, winner } = useSelector(
     (state) => state.grid7Slice
   );
 
   const { modal } = useSelector((state) => state.modalSlice);
 
+  //this function is called when click on one tile with index passed as argument
+  //here we can change the array and set that array into the redux
   const handleCellClick = (index) => {
-    console.log(board, "board");
+    setAudioPlay(true);
     if (board[index] === "" && isHumanTurn && winner == null) {
       const newBoard = [...board];
       newBoard[index] = "X";
@@ -521,42 +529,31 @@ const Grid7 = () => {
     }
   };
 
-  useEffect(() => {
-
-    // const checkWinner = calculateWinner(board);
-    // if(checkWinner){
-    //     localStorage.setItem("WINNER", true); 
-    // }
-
-    const computerMove = () => {
+  //this is for computers move here computer will call getsmartcomputermove function to get some index where computer will put its value
+  const computerMove = () => {
+    const checkWinner = calculateWinner(board);
+    if (!checkWinner) {
       const moveIndex = getSmartComputerMove(board);
       const newBoard = [...board];
       newBoard[moveIndex] = "O";
       setTimeout(() => {
+        setAudioPlay(false);
         dispatch(setBoard(newBoard));
         dispatch(setIsHumanTurn(true));
       }, 600);
-    };
-
-    // const check = localStorage.getItem("WINNER");
-    const checkWinner = calculateWinner(board)
-    if (!isHumanTurn && !checkWinner) {
-      console.log("computer's turn");
-
-      computerMove();
     }
-  }, [isHumanTurn, winner]);
+  };
 
+  //this closes the modal which opened when someone wins or game over
   const closeModalHandler = () => {
     setWinType("");
-    // localStorage.removeItem("WINNER");
     dispatch(closeModal());
   };
 
+  //here winner is checked and set into the redux state
   useEffect(() => {
     const checkWinner = calculateWinner(board);
     if (checkWinner) {
-      
       dispatch(setWinner(checkWinner));
     }
   }, [handleCellClick]);
@@ -565,12 +562,13 @@ const Grid7 = () => {
     dispatch(openModal());
   }
 
+  //here every box is checked if filled then there is draw condition
   useEffect(() => {
     if (board.every((item) => item != "")) {
       setWinType("0");
       dispatch(openModal());
     }
-  },[board]);
+  }, [board]);
 
   return (
     <div className={classes.container}>
@@ -712,14 +710,22 @@ const Grid7 = () => {
                     : null
                 }
               `}
+                style={
+                  cell === "X"
+                    ? { color: "#e8d615" }
+                    : {
+                        color: "white",
+                      }
+                }
                 onClick={() => handleCellClick(index)}
               >
                 {cell}
               </div>
             ))}
-            {/* {isHumanTurn ? null : computerMove()} */}
+            {isHumanTurn ? null : computerMove()}
           </div>
         </div>
+        <div className={classes.desc}>place 5 in a row</div>
       </div>
       {modal && (
         <GameOverModal
@@ -729,6 +735,7 @@ const Grid7 = () => {
           path="/grid7"
         />
       )}
+      {audioPlay ? <UserTurnAudio /> : <ComputerTurnAudio />}
     </div>
   );
 };

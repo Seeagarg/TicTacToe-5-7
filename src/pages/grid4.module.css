@@ -157,6 +157,17 @@ font-family: 'Protest Riot', sans-serif;
     border-bottom: 0 !important;
 }
 
+.desc{
+    margin-top: 2rem;
+    font-size: 3rem;
+    color: rgb(245, 241, 33);
+    -webkit-text-stroke-width: 0.1rem;
+    -webkit-text-stroke-color: black;
+    font-family: 'Montserrat',sans-serif;
+    font-family: 'Protest Riot', sans-serif;
+    letter-spacing: 1px;
+}
+
 @media screen and (max-width:800px){
     .circle_img_container{
         height: 25rem;
