@@ -507,10 +507,13 @@ const getSmartComputerMove = (board) => {
   return randomIndex();
 };
 
+
+
 const Grid7 = () => {
   const dispatch = useDispatch();
   const [winType, setWinType] = useState("");
-  const [audioPlay, setAudioPlay] = useState(false);
+  const [xAudioPlay, setXAudioPlay] = useState(false);
+  const [oAudioPlay,setOAudioPlay] = useState(false)
   const { board, isHumanTurn, winner } = useSelector(
     (state) => state.grid7Slice
   );
@@ -520,7 +523,8 @@ const Grid7 = () => {
   //this function is called when click on one tile with index passed as argument
   //here we can change the array and set that array into the redux
   const handleCellClick = (index) => {
-    setAudioPlay(true);
+    setXAudioPlay(true);
+    setOAudioPlay(false)
     if (board[index] === "" && isHumanTurn && winner == null) {
       const newBoard = [...board];
       newBoard[index] = "X";
@@ -537,7 +541,8 @@ const Grid7 = () => {
       const newBoard = [...board];
       newBoard[moveIndex] = "O";
       setTimeout(() => {
-        setAudioPlay(false);
+        setOAudioPlay(true);
+        setXAudioPlay(false);
         dispatch(setBoard(newBoard));
         dispatch(setIsHumanTurn(true));
       }, 600);
@@ -735,7 +740,8 @@ const Grid7 = () => {
           path="/grid7"
         />
       )}
-      {audioPlay ? <UserTurnAudio /> : <ComputerTurnAudio />}
+      {xAudioPlay ? <UserTurnAudio /> : ""}
+      {oAudioPlay?<ComputerTurnAudio />:""}
     </div>
   );
 };

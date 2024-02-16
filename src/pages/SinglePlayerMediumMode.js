@@ -17,7 +17,9 @@ const SinglePlayerMediumMode = () => {
   const [winType, setWinType] = useState("");
   const { modal } = useSelector((state) => state.modalSlice);
   const { gameOver } = useSelector((state) => state.gameOverSlice);
-  const [audioPlay, setAudioPlay] = useState(false);
+  const [xAudioPlay, setXAudioPlay] = useState(false);
+  const [oAudioPlay,setOAudioPlay] = useState(false)
+
 
   const openModalHandler = () => {
     dispatch(openModal());
@@ -29,7 +31,8 @@ const SinglePlayerMediumMode = () => {
   };
 
   const handleTileClick = (data) => {
-    setAudioPlay(true);
+    setXAudioPlay(true);
+    setOAudioPlay(false)
     const filled = tiles.some((item) => item.index == data.index);
     if (player1 && !filled) {
       dispatch(setTiles({ index: data.index, value: "X" }));
@@ -224,7 +227,8 @@ const SinglePlayerMediumMode = () => {
     const over = localStorage.getItem("gameOver");
     if (computer && tiles?.length !== 9 && !over) {
       setTimeout(() => {
-        setAudioPlay(false);
+        setXAudioPlay(false);
+        setOAudioPlay(true);
         dispatch(setTilesComputer());
         dispatch(toggleTurn());
       }, 1000);
@@ -282,7 +286,8 @@ const SinglePlayerMediumMode = () => {
 
   return (
     <div className={classes.container}>
-      {audioPlay ? <UserTurnAudio /> : <ComputerTurnAudio />}
+      {xAudioPlay ? <UserTurnAudio /> : ""}
+      {oAudioPlay?<ComputerTurnAudio />:""}
       <div className={classes.sub_container}>
         <div className={classes.game_title}>
           <h1 className={classes.title}>Tic-Tac-Toe</h1>

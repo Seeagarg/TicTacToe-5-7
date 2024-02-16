@@ -8,6 +8,9 @@ import LevelsPage from "../pages/LevelsPage";
 import SinglePlayerHardMode from "../pages/SinglePlayerHardMode";
 import Grid4 from "../pages/Grid4";
 import Grid7 from "../pages/Grid7";
+import LevelsPageMultiplePlayer from "../pages/LevelsPageMultiplePlayer";
+import Grid5Multiplayer from "../pages/Grid5Multiplayer";
+import Grid7Multiplayer from "../pages/Grid7Multiplayer";
 
 const Routing = () => {
   const router = createBrowserRouter([
@@ -20,8 +23,20 @@ const Routing = () => {
       element: <LevelsPage />,
     },
     {
+      path: "/multi-player/levels",
+      element: <LevelsPageMultiplePlayer />,
+    },
+    {
       path: "/game-mode-multiplayer",
       element: <GameMultiplayerPage />,
+    },
+    {
+      path: "/game-mode-multiplayer/5*5",
+      element: <Grid5Multiplayer />,
+    },
+    {
+      path: "/game-mode-multiplayer/7*7",
+      element: <Grid7Multiplayer />,
     },
     {
       path: "/single-player/game-mode-easy",
@@ -36,11 +51,11 @@ const Routing = () => {
       element: <SinglePlayerHardMode />,
     },
     {
-      path: "/grid4",
+      path: "/single-player/game-mode-5*5",
       element: <Grid4/>,
     },
     {
-      path: "/grid7",
+      path: "/single-player/game-mode-7*7",
       element: <Grid7/>,
     },
   ]);

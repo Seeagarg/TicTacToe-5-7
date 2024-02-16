@@ -16,6 +16,8 @@ import { toggleTurn } from "../slices/playerSlice";
 import GameOverModal from "../components/GameOverModal";
 import { closeModal, openModal } from "../slices/modalSlice";
 import gameOverSlice, { setGameOver } from "../slices/gameOverSlice";
+import UserTurnAudio from "../components/UserTurnAudio";
+import ComputerTurnAudio from "../components/ComputerTurnAudio";
 
 const GameMultiplayerPage = () => {
   const dispatch = useDispatch();
@@ -36,6 +38,8 @@ const GameMultiplayerPage = () => {
   // const [showModal, setShowModal] = useState(false);
   const [winner, setWinner] = useState("");
   const [winType, setWinType] = useState("");
+  const [xAudioPlay, setXAudioPlay] = useState(false);
+  const [oAudioPlay,setOAudioPlay] = useState(false)
 
   // WIN TYPE 0 DRAW
 
@@ -207,6 +211,16 @@ const GameMultiplayerPage = () => {
   ]);
 
   const tileClickHandler = (tile) => {
+
+    if(player1){
+      setXAudioPlay(true)
+      setOAudioPlay(false)
+    }
+    else{
+      setOAudioPlay(true)
+      setXAudioPlay(false)
+    }
+    
     if (tile.tile === "1") {
       if (player1) {
         if (oneTile == "") {
@@ -327,6 +341,8 @@ const GameMultiplayerPage = () => {
   };
   return (
     <div className={classes.container}>
+    {xAudioPlay ? <UserTurnAudio /> : ""}
+      {oAudioPlay?<ComputerTurnAudio />:""}
       <div className={classes.sub_container}>
         <div className={classes.game_title}>
           <h1 className={classes.title}>Tic-Tac-Toe</h1>
@@ -455,6 +471,7 @@ const GameMultiplayerPage = () => {
           path="/game-mode-multiplayer"
         />
       )}
+
     </div>
   );
 };

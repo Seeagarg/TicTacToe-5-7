@@ -20,7 +20,8 @@ const SinglePlayerHardMode = () => {
   const [winType, setWinType] = useState("");
   const { modal } = useSelector((state) => state.modalSlice);
   const { gameOver } = useSelector((state) => state.gameOverSlice);
-  const [audioPlay, setAudioPlay] = useState(false);
+  const [xAudioPlay, setXAudioPlay] = useState(false);
+  const [oAudioPlay,setOAudioPlay] = useState(false)
 
   const openModalHandler = () => {
     dispatch(openModal());
@@ -32,7 +33,8 @@ const SinglePlayerHardMode = () => {
   };
 
   const handleTileClick = (data) => {
-    setAudioPlay(true);
+    setXAudioPlay(true);
+    setOAudioPlay(false)
     const filled = tilesHardMode.some((item) => item.index == data.index);
     if (player1 && !filled) {
       dispatch(setTilesHardMode({ index: data.index, value: "X" }));
@@ -53,9 +55,7 @@ const SinglePlayerHardMode = () => {
       doesObjectExistAtIndexWithValue(tilesHardMode, 3, "X")
     ) {
       dispatch(setGameOver());
-
       setWinner("Player X won the game!");
-
       openModalHandler();
     }
     if (
@@ -244,7 +244,8 @@ const SinglePlayerHardMode = () => {
 
     if (computer && tilesHardMode?.length !== 9 && !over) {
       setTimeout(() => {
-        setAudioPlay(false);
+        setXAudioPlay(false);
+    setOAudioPlay(true)
         dispatch(setTilesHardModeComputer());
         dispatch(toggleTurn());
       }, 600);
@@ -303,7 +304,8 @@ const SinglePlayerHardMode = () => {
 
   return (
     <div className={classes.container}>
-      {audioPlay ? <UserTurnAudio /> : <ComputerTurnAudio />}
+       {xAudioPlay ? <UserTurnAudio /> : ""}
+      {oAudioPlay?<ComputerTurnAudio />:""}
       <div className={classes.sub_container}>
         <div className={classes.game_title}>
           <h1 className={classes.title}>Tic-Tac-Toe</h1>

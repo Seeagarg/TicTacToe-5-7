@@ -11,7 +11,7 @@ import { resetTiles5Slice } from '../slices/tiles5Slice';
 import { resetTiles7Slice } from '../slices/grid7Slice';
 import { closeModal } from '../slices/modalSlice';
 
-const LevelsPage = () => {
+const LevelsPageMultiplePlayer = () => {
     const navigate=useNavigate();
     const dispatch=useDispatch();
     const handleNavigate=(path)=>{
@@ -24,6 +24,10 @@ const LevelsPage = () => {
         dispatch(resetTiles5Slice())
         dispatch(resetTiles7Slice());
         dispatch(closeModal());
+        // localStorage.removeItem("modal")
+        // localStorage.removeItem("WINNER");
+        // dispatch(setTurn())
+        // dispatch(toggleTurn());
         navigate(path);
     }
   return (
@@ -49,31 +53,19 @@ const LevelsPage = () => {
       <div className={classes.game_mode_container}>
         <button
           className={classes.easy_btn}
-          onClick={()=>handleNavigate("/single-player/game-mode-easy")}
+          onClick={()=>handleNavigate("/game-mode-multiplayer")}
         >
-         3*3 Easy Mode
+         3*3 Mode
         </button>
         <button
           className={classes.easy_btn}
-          onClick={()=>handleNavigate("/single-player/game-mode-medium")}
-        >
-         3*3 Medium Mode
-        </button>
-        <button
-          className={classes.easy_btn}
-          onClick={()=>handleNavigate("/single-player/game-mode-hard")}
-        >
-          3*3 Hard Mode
-        </button>
-        <button
-          className={classes.easy_btn}
-          onClick={()=>handleNavigate("/single-player/game-mode-5*5")}
+          onClick={()=>handleNavigate("/game-mode-multiplayer/5*5")}
         >
           5*5 Mode
         </button>
         <button
           className={classes.easy_btn}
-          onClick={()=>handleNavigate("/single-player/game-mode-7*7")}
+          onClick={()=>handleNavigate("/game-mode-multiplayer/7*7")}
         >
           7*7 Mode
         </button>
@@ -82,4 +74,4 @@ const LevelsPage = () => {
   )
 }
 
-export default LevelsPage;
+export default LevelsPageMultiplePlayer;

@@ -6,6 +6,7 @@ import { closeModal, openModal } from "../slices/modalSlice";
 import GameOverModal from "../components/GameOverModal";
 import UserTurnAudio from "../components/UserTurnAudio";
 import ComputerTurnAudio from "../components/ComputerTurnAudio";
+import playerSlice, { resetPlayerState, toggleTurn } from "../slices/playerSlice";
 
 const winningCombinations = [
   [0, 1, 2, 3],
@@ -54,7 +55,6 @@ const calculateWinner = (board) => {
       return board[b];
     }
   }
-
   return null;
 };
 
@@ -64,208 +64,8 @@ function doesObjectExistAtIndexWithValue(array, indexToCheck, valueToCheck) {
   return foundObject && array[indexToCheck] === valueToCheck;
 }
 
-//to run computer smartly
-const getSmartComputerMove = (board) => {
-  //first check the inner 2 tiles and block the third tile in all rows and cols and diagonals
-  if (
-    doesObjectExistAtIndexWithValue(board, 2, "X") &&
-    doesObjectExistAtIndexWithValue(board, 3, "X") &&
-    !doesObjectExistAtIndexWithValue(board, 1, "O") &&
-    !doesObjectExistAtIndexWithValue(board, 1, "X")
-  ) {
-    return 1;
-  }
-  if (
-    doesObjectExistAtIndexWithValue(board, 1, "X") &&
-    doesObjectExistAtIndexWithValue(board, 2, "X") &&
-    !doesObjectExistAtIndexWithValue(board, 3, "O") &&
-    !doesObjectExistAtIndexWithValue(board, 3, "X")
-  ) {
-    return 3;
-  }
-  if (
-    doesObjectExistAtIndexWithValue(board, 6, "X") &&
-    doesObjectExistAtIndexWithValue(board, 7, "X") &&
-    !doesObjectExistAtIndexWithValue(board, 8, "O") &&
-    !doesObjectExistAtIndexWithValue(board, 8, "X")
-  ) {
-    return 8;
-  }
-  if (
-    doesObjectExistAtIndexWithValue(board, 8, "X") &&
-    doesObjectExistAtIndexWithValue(board, 7, "X") &&
-    !doesObjectExistAtIndexWithValue(board, 6, "O") &&
-    !doesObjectExistAtIndexWithValue(board, 6, "X")
-  ) {
-    return 6;
-  }
-  if (
-    doesObjectExistAtIndexWithValue(board, 11, "X") &&
-    doesObjectExistAtIndexWithValue(board, 12, "X") &&
-    !doesObjectExistAtIndexWithValue(board, 13, "O") &&
-    !doesObjectExistAtIndexWithValue(board, 13, "X")
-  ) {
-    return 13;
-  }
-  if (
-    doesObjectExistAtIndexWithValue(board, 13, "X") &&
-    doesObjectExistAtIndexWithValue(board, 12, "X") &&
-    !doesObjectExistAtIndexWithValue(board, 11, "O") &&
-    !doesObjectExistAtIndexWithValue(board, 11, "X")
-  ) {
-    return 11;
-  }
-  if (
-    doesObjectExistAtIndexWithValue(board, 16, "X") &&
-    doesObjectExistAtIndexWithValue(board, 17, "X") &&
-    !doesObjectExistAtIndexWithValue(board, 18, "O") &&
-    !doesObjectExistAtIndexWithValue(board, 18, "X")
-  ) {
-    return 18;
-  }
-  if (
-    doesObjectExistAtIndexWithValue(board, 17, "X") &&
-    doesObjectExistAtIndexWithValue(board, 18, "X") &&
-    !doesObjectExistAtIndexWithValue(board, 16, "O") &&
-    !doesObjectExistAtIndexWithValue(board, 16, "X")
-  ) {
-    return 16;
-  }
-  if (
-    doesObjectExistAtIndexWithValue(board, 21, "X") &&
-    doesObjectExistAtIndexWithValue(board, 22, "X") &&
-    !doesObjectExistAtIndexWithValue(board, 23, "O") &&
-    !doesObjectExistAtIndexWithValue(board, 23, "X")
-  ) {
-    return 23;
-  }
-  if (
-    doesObjectExistAtIndexWithValue(board, 22, "X") &&
-    doesObjectExistAtIndexWithValue(board, 23, "X") &&
-    !doesObjectExistAtIndexWithValue(board, 21, "O") &&
-    !doesObjectExistAtIndexWithValue(board, 21, "X")
-  ) {
-    return 21;
-  }
 
-  if (
-    doesObjectExistAtIndexWithValue(board, 5, "X") &&
-    doesObjectExistAtIndexWithValue(board, 10, "X") &&
-    !doesObjectExistAtIndexWithValue(board, 15, "O") &&
-    !doesObjectExistAtIndexWithValue(board, 15, "X")
-  ) {
-    return 15;
-  }
-
-  if (
-    doesObjectExistAtIndexWithValue(board, 10, "X") &&
-    doesObjectExistAtIndexWithValue(board, 15, "X") &&
-    !doesObjectExistAtIndexWithValue(board, 5, "O") &&
-    !doesObjectExistAtIndexWithValue(board, 5, "X")
-  ) {
-    return 5;
-  }
-
-  if (
-    doesObjectExistAtIndexWithValue(board, 6, "X") &&
-    doesObjectExistAtIndexWithValue(board, 11, "X") &&
-    !doesObjectExistAtIndexWithValue(board, 16, "O") &&
-    !doesObjectExistAtIndexWithValue(board, 16, "X")
-  ) {
-    return 16;
-  }
-  if (
-    doesObjectExistAtIndexWithValue(board, 11, "X") &&
-    doesObjectExistAtIndexWithValue(board, 16, "X") &&
-    !doesObjectExistAtIndexWithValue(board, 6, "O") &&
-    !doesObjectExistAtIndexWithValue(board, 6, "X")
-  ) {
-    return 6;
-  }
-  if (
-    doesObjectExistAtIndexWithValue(board, 7, "X") &&
-    doesObjectExistAtIndexWithValue(board, 12, "X") &&
-    !doesObjectExistAtIndexWithValue(board, 17, "O") &&
-    !doesObjectExistAtIndexWithValue(board, 17, "X")
-  ) {
-    return 17;
-  }
-  if (
-    doesObjectExistAtIndexWithValue(board, 12, "X") &&
-    doesObjectExistAtIndexWithValue(board, 17, "X") &&
-    !doesObjectExistAtIndexWithValue(board, 7, "O") &&
-    !doesObjectExistAtIndexWithValue(board, 7, "X")
-  ) {
-    return 7;
-  }
-  if (
-    doesObjectExistAtIndexWithValue(board, 8, "X") &&
-    doesObjectExistAtIndexWithValue(board, 13, "X") &&
-    !doesObjectExistAtIndexWithValue(board, 18, "O") &&
-    !doesObjectExistAtIndexWithValue(board, 18, "X")
-  ) {
-    return 18;
-  }
-  if (
-    doesObjectExistAtIndexWithValue(board, 13, "X") &&
-    doesObjectExistAtIndexWithValue(board, 18, "X") &&
-    !doesObjectExistAtIndexWithValue(board, 8, "O") &&
-    !doesObjectExistAtIndexWithValue(board, 8, "X")
-  ) {
-    return 8;
-  }
-  if (
-    doesObjectExistAtIndexWithValue(board, 9, "X") &&
-    doesObjectExistAtIndexWithValue(board, 14, "X") &&
-    !doesObjectExistAtIndexWithValue(board, 19, "O") &&
-    !doesObjectExistAtIndexWithValue(board, 19, "X")
-  ) {
-    return 19;
-  }
-
-  //computer checks by putting "O" and "X" on every index whether there is some winning condition or not
-  for (let i = 0; i < 25; i++) {
-    if (board[i] === "") {
-      const newBoard = [...board];
-      newBoard[i] = "O";
-      if (calculateWinner(newBoard)) {
-        return i;
-      }
-      newBoard[i] = "";
-    }
-  }
-
-  for (let i = 0; i < 25; i++) {
-    if (board[i] === "") {
-      const newBoard = [...board];
-      newBoard[i] = "X";
-      if (calculateWinner(newBoard)) {
-        return i;
-      }
-      newBoard[i] = "";
-    }
-  }
-
-  //this generates random index where computer will run its turn and put "O"
-  function randomIndex() {
-    const randomNumber = Math.floor(Math.random() * 25);
-
-    const check = board.every((item) => item !== "");
-
-    if (board[randomNumber] == "") {
-      return randomNumber;
-    } else if (check) {
-      return;
-    } else {
-      //if generated random index has some value there than again call the function
-      return randomIndex();
-    }
-  }
-
-  return randomIndex();
-};
-
-const Grid4 = () => {
+const Grid5Multiplayer = () => {
   const dispatch = useDispatch();
   const [winType, setWinType] = useState("");
   const [audioPlay, setAudioPlay] = useState(false);
@@ -274,37 +74,31 @@ const Grid4 = () => {
   const { board, isHumanTurn, winner } = useSelector(
     (state) => state.tiles5Slice
   );
+  const {player1,computer} = useSelector((state)=>state.playerSlice)
 
   const { modal } = useSelector((state) => state.modalSlice);
 
   //this function is called when click on one tile with index passed as argument
   //here we can change the array and set that array into the redux
   const handleCellClick = (index) => {
-    if (board[index] === "" && isHumanTurn) {
+    if (board[index] === "" && player1) {
       const newBoard = [...board];
       newBoard[index] = "X";
       setXAudioPlay(true);
     setOAudioPlay(false)
       dispatch(setBoard(newBoard));
-      dispatch(setIsHumanTurn(false));
+      dispatch(toggleTurn())
+    }
+    if (board[index] === "" && computer) {
+      const newBoard = [...board];
+      newBoard[index] = "O";
+      setXAudioPlay(false);
+    setOAudioPlay(true)
+      dispatch(setBoard(newBoard));
+      dispatch(toggleTurn())
     }
   };
 
-  //this is for computers move here computer will call getsmartcomputermove function to get some index where computer will put its value
-  const computerMove = () => {
-    const checkWinner = calculateWinner(board);
-    if (!checkWinner) {
-      const moveIndex = getSmartComputerMove(board);
-      const newBoard = [...board];
-      newBoard[moveIndex] = "O";
-      setTimeout(() => {
-        setXAudioPlay(false);
-    setOAudioPlay(true)
-        dispatch(setBoard(newBoard));
-        dispatch(setIsHumanTurn(true));
-      }, 600);
-    }
-  };
 
   //this closes the modal which opened when someone wins or game over
   const closeModalHandler = () => {
@@ -318,7 +112,7 @@ const Grid4 = () => {
     if (checkWinner) {
       dispatch(setWinner(checkWinner));
     }
-  }, [handleCellClick, computerMove]);
+  }, [handleCellClick]);
 
   if (winner) {
     dispatch(openModal());
@@ -342,7 +136,7 @@ const Grid4 = () => {
         </div>
 
         <div className={classes.player_turn_indicator}>
-          <h1>{isHumanTurn ? "Player X's Turn " : "Computer O's Turn"}</h1>
+          <h1>{player1 ? "Player X's Turn " : "Computer O's Turn"}</h1>
         </div>
 
         <div className={classes.x_img_container}>
@@ -438,7 +232,7 @@ const Grid4 = () => {
                 <div>{cell}</div>
               </div>
             ))}
-            {isHumanTurn ? null : computerMove()}
+            {/* {isHumanTurn ? null : computerMove()} */}
           </div>
         </div>
         <div className={classes.desc}>place 4 in a row</div>
@@ -455,4 +249,4 @@ const Grid4 = () => {
   );
 };
 
-export default Grid4;
+export default Grid5Multiplayer;
